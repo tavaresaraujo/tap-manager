@@ -49,6 +49,14 @@ namespace Api
                 app.UseHsts();
             }
 
+            app.UseCors(c =>
+            {
+                c.AllowAnyHeader();
+                c.AllowAnyMethod();
+                c.AllowAnyOrigin();
+                //c.WithOrigins("http://localhost:4200", "http://oppintranet01", "http://localhost", "http://localhost:1122", "http://oppintraneth:1122", "http://avaliacao");
+            });
+
             app.UseHttpsRedirection();
             app.UseMvc();
 

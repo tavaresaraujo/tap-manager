@@ -23,6 +23,15 @@ namespace Api.Controllers
         #endregion
 
         #region Methods
+        [ProducesResponseType(typeof(GetBeverageResponse), 200)]
+        [ProducesResponseType(typeof(NotFoundResponseModel), 404)]
+        [ProducesResponseType(typeof(PreconditionFailedResponseModel), 412)]
+        public async Task<IActionResult> Get()
+        {
+            var response = await _beverageAppService.Get();
+            return base.StatusCode((int)HttpStatusCode.OK, response);
+        }
+
         [HttpGet("{code}", Name = "GetBeverage")]
         [ProducesResponseType(typeof(GetBeverageResponse), 200)]
         [ProducesResponseType(typeof(NotFoundResponseModel), 404)]

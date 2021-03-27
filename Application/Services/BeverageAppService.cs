@@ -32,6 +32,22 @@ namespace Application.Services
         #endregion
 
         #region Implementations
+        public async Task<List<GetBeverageResponse>> Get()
+        {
+            try
+            {
+                var entity = await _beverageRepository.ListAllAsync();
+                //if (entity == null)
+                //    throw new NotFoundException(typeof(Tap).Name, "Item not found.");
+
+                return _mapper.Map<List<GetBeverageResponse>>(entity);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
         public async Task<GetBeverageResponse> GetByIdAsync(int id)
         {
             try
@@ -79,6 +95,8 @@ namespace Application.Services
                 throw e;
             }
         }
+
+
 
         public async Task<bool> UpdateAsync(string code, UpdateBeverageRequest model)
         {

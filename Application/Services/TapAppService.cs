@@ -29,6 +29,22 @@ namespace Application.Services
         #endregion
 
         #region Implmentations
+        public async Task<List<GetTapResponse>> Get()
+        {
+            try
+            {
+                var entity = await _tapRepository.ListAllAsync();
+                //if (entity == null)
+                //    throw new NotFoundException(typeof(Tap).Name, "Item not found.");
+
+                return _mapper.Map<List<GetTapResponse>>(entity);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
         public async Task<GetTapResponse> GetByIdAsync(int id)
         {
             try
@@ -70,6 +86,8 @@ namespace Application.Services
                 //Todo: Verificar regra
                 var entity = _mapper.Map<Tap>(model);
                 entity.BeveragePrice = beveragePrice ?? throw new KeyNotFoundException("Invalid beveragePrice.");
+
+                await _tapRepository.AddAsync(entity);
 
                 return _mapper.Map<GetTapResponse>(entity);
             }
@@ -137,6 +155,8 @@ namespace Application.Services
                 throw e;
             }
         }
+
+
         #endregion
     }
 }
